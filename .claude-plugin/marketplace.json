@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "dev-toolkit",
+  "description": "Development workflow tools for Claude Code - logging agents, project checks, release pipelines",
+  "owner": {
+    "name": "Cameron Sjo",
+    "github": "cameronsjo"
+  },
+  "plugins": [
+    {
+      "name": "dev-toolkit",
+      "source": "./.claude-plugin",
+      "description": "Development workflow tools - logging agents, project checks, linting, and context loading",
+      "version": "1.2.0"
+    }
+  ]
+}
