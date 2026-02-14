@@ -1,7 +1,7 @@
 {
   "name": "dev-toolkit",
   "description": "Development workflow tools - logging agents, project checks, linting, and context loading",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "cameronsjo"
   },
