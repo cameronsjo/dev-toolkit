@@ -1,0 +1,11 @@
+services:
+  gibram:
+    image: gibramio/gibram:latest
+    container_name: gibram
+    ports:
+      - "6161:6161"
+    environment:
+      - GIBRAM_VECTOR_DIM=768   # nomic-embed-text; change to 1024 for mxbai-embed-large
+      - GIBRAM_LOG_LEVEL=info
+    command: ["-insecure"]
+    restart: unless-stopped

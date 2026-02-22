@@ -1,0 +1,21 @@
+# mise configuration
+# https://mise.jdx.dev/configuration.html
+
+[tools]
+node = "lts"  # Use LTS by default, or specify exact: "20.11.0"
+
+# Uncomment to manage additional tools:
+# python = "3.12"
+# go = "1.22"
+# rust = "stable"
+
+[settings]
+# Enable experimental features
+experimental = true
+
+# Automatically install tools when entering directory
+# auto_install = true
+
+[env]
+# Project-specific environment variables
+# MY_VAR = "value"

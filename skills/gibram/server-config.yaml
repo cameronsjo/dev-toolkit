@@ -1,0 +1,2 @@
+addr: ":6161"
+vector_dim: 768   # nomic-embed-text dimensions; change to 1024 for mxbai-embed-large
