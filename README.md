@@ -1,78 +1,47 @@
-# Development
+# Dev Toolkit
 
-Development workflow tools - logging agents, project checks, linting, and context loading.
+Development workflow tools for building and shipping — logging agents, release pipelines, dependency audits, diagram rendering, and project modernization.
+
+Designed alongside [essentials](https://github.com/cameronsjo/essentials) (desk rhythm) and [rules](https://github.com/cameronsjo/rules) (code standards). Dev-toolkit covers *the tools for building and shipping*.
+
+## Skills
+
+| Skill | Description |
+|-------|-------------|
+| `logging` | Generate structured log messages with the action-oriented pattern (Preparing → Success → Failure) |
+| `dependency-vetting` | Evaluate third-party dependencies for trust and security before adoption |
+| `pretty-diagrams` | Create Mermaid diagrams rendered as SVG or ASCII via mmd-render |
+| `skill-scout` | Evaluate any GitHub repo — what it does, how to use it, optionally build a skill from it |
+| `chunkhound` | Set up ChunkHound semantic code search for large codebases |
+| `gibram` | Research and write across large doc corpora with local knowledge graphs |
+| `levelup` | Audit and upgrade projects to 2026 tooling (mise, Biome, uv+ruff) |
+| `cloud-native-checklist` | Generate CNCF/12-Factor compliance checklists and ADRs |
+| `container-signing` | Set up Cosign image signing and SLSA provenance attestations |
+| `install-github-app-safely` | Install Claude GitHub App with DDoS/abuse safeguards |
+| `sync-description` | Update GitHub repo description from README analysis |
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/check` | Run project validation checks and fix errors |
-| `/clean` | Fix all linting and formatting issues |
-| `/context-prime` | Load project context from README and git files |
+| `/sync-description` | Update GitHub repo description from README |
+| `/install-github-app-safely` | Install Claude GitHub App with safeguards |
+| `/modernize-dependencies` | Audit, update, and modernize project dependencies |
+| `/setup-release-pipeline` | Set up Beta → RC → Stable release pipeline with GitHub Actions |
 
 ## Agents
 
 | Agent | Description |
 |-------|-------------|
-| `add-logging` | Add storytelling-style structured logging |
+| `add-logging` | Automatically invoked when adding logging — follows the storytelling philosophy |
 
-## Installation
+## Install
 
 ```bash
-/plugin install development@cameronsjo
+claude plugin install dev-toolkit@workbench
+claude plugin enable dev-toolkit@workbench
 ```
 
-## Usage
+## License
 
-### Check
-
-Run project checks without committing:
-
-```
-/check
-```
-
-Auto-detects language and package manager (npm, pnpm, yarn, bun, Python, Go, Rust, Ruby).
-
-### Clean
-
-Fix all linting and formatting:
-
-```
-/clean
-```
-
-Runs appropriate formatters and linters for detected languages.
-
-### Context Prime
-
-Load project context after starting fresh:
-
-```
-/context-prime
-```
-
-### Add Logging Agent
-
-The `add-logging` agent is invoked automatically when you ask Claude to add logging. It follows the "storytelling" philosophy:
-
-**Core principle:** Debug at 3am without reading code.
-
-Every significant operation logs:
-1. **Beginning** - What's being attempted with all parameters
-2. **Success** - What succeeded with duration
-3. **Failure** - What failed with full context and stack trace
-
-```
-INFO  "Beginning ProcessPayment. User: u123, OrderId: o456, Amount: $99.00"
-INFO  "Successfully ProcessPayment. User: u123, OrderId: o456, Duration: 234ms"
-ERROR "Failed ProcessPayment. User: u123, OrderId: o456, Error: CardDeclined"
-```
-
-## Philosophy
-
-Development tools should:
-- Auto-detect project type and tooling
-- Fix issues automatically when possible
-- Provide complete context for debugging
-- Work across multiple languages
+MIT
