@@ -1,42 +1,49 @@
 ---
 name: pretty-diagrams
-description: Create and render beautiful diagrams using Mermaid markup. Use when producing architecture diagrams, flowcharts, sequence, state, class, or ER diagrams — especially when visual output (SVG) or terminal-friendly ASCII is needed. Covers diagram type selection, markup best practices, and rendering with mmd-render (beautiful-mermaid SVG / box-of-rain ASCII) or mermaid CLI (full type fallback).
+description: Create, audit, and render Mermaid diagrams. Use when producing architecture diagrams, flowcharts, sequence, state, class, or ER diagrams. Also use when cleaning up existing diagrams — fixing legacy syntax, replacing single-letter node IDs, trimming oversized flowcharts, or deduplicating diagram sources.
 ---
 
 # Pretty Diagrams
 
-Three-tier rendering stack for Mermaid diagrams: ASCII previews, themed SVG exports, and full-type fallback.
+Write clean Mermaid markup that renders natively in GitHub and Obsidian. Optionally render to ASCII (box-of-rain) or themed SVG (beautiful-mermaid) when explicitly requested.
 
 ## When to Use
 
 - User asks for an architecture diagram, flowchart, sequence, state, class, or ER diagram
 - Need to visualize data flows, system relationships, processes, or state machines
-- Embedding diagrams in docs, PRs, Obsidian, or terminal output
-- User wants a "pretty" or "rendered" version, not just a code block
+- Auditing or cleaning up existing mermaid diagrams in a codebase
+- User explicitly asks for ASCII art or themed SVG rendering
 
-## Tool Selection
+## Choosing the Right Output
 
-### By Output Context
+**Ask the user what they need.** Don't assume SVG. Walk through this decision:
 
-| Context | Tool |
-|---------|------|
-| Terminal preview | `mmd-render --ascii` (flowchart/sequence only) |
-| Pretty SVG export | `mmd-render` (beautiful-mermaid) |
-| GitHub/Obsidian embed | Raw mermaid code block (rendered natively) |
-| Unsupported diagram type | `mmdc` (mermaid CLI) |
+### 1. Does the diagram live in a `.md` file viewed on GitHub or Obsidian?
 
-### By Diagram Type
+**Yes** → Write a fenced mermaid code block. Done. No rendering needed.
 
-| Type | mmd-render SVG | mmd-render ASCII | mmdc |
-|------|:--------------:|:----------------:|:----:|
-| Flowchart | ✅ | ✅ | ✅ |
-| Sequence | ✅ | ✅ | ✅ |
-| State | ✅ | ❌ | ✅ |
-| Class | ✅ | ❌ | ✅ |
-| ER | ✅ | ❌ | ✅ |
+### 2. Does the user want rendered output?
+
+Ask: **"Do you want ASCII art, a themed SVG, or both?"**
+
+### 3. Pick the tool based on diagram type and output format
+
+**Preference order: box-of-rain first, beautiful-mermaid second, mmdc last.**
+
+| Diagram Type | box-of-rain | beautiful-mermaid | mmdc (fallback) |
+|--------------|:-----------:|:-----------------:|:---------------:|
+| Flowchart | ✅ ASCII + SVG (shadows) | ✅ ASCII + SVG (themed) | ✅ |
+| Sequence | ✅ ASCII + SVG | ✅ ASCII + SVG | ✅ |
+| State | ❌ | ✅ SVG only | ✅ |
+| Class | ❌ | ✅ SVG only | ✅ |
+| ER | ❌ | ✅ SVG only | ✅ |
 | Gantt / Pie / Git / XY | ❌ | ❌ | ✅ |
 
-**Default choice:** `mmd-render` for anything needing visual output. Use `--ascii` only when the user explicitly wants terminal output.
+### Recommendations
+
+- **Flowcharts and sequences** → Start with `box-of-rain`. It has a CLI, works with Node, and the shadow SVGs look great. If the diagram has deeply nested subgraphs or dotted edges (`-.->`) that render poorly, fall back to `beautiful-mermaid` which handles complex layouts better.
+- **State, class, ER** → `beautiful-mermaid` (SVG only, no ASCII for these types). Requires bun.
+- **Gantt, pie, git, xychart** → `mmdc` is the only option. These are niche types that the other tools don't support.
 
 ## Writing Mermaid Markup
 
@@ -144,59 +151,97 @@ erDiagram
 
 Cardinality syntax: `||--o{` = one-to-many. Left side is the "one".
 
-## Rendering
+## Rendering (only when requested)
 
-### mmd-render (primary)
+### box-of-rain (ASCII + SVG CLI)
 
-`mmd-render` is installed at `~/bin/mmd-render`. It wraps beautiful-mermaid (SVG) and box-of-rain (ASCII).
+Has a CLI. Works with Node. Best for quick ASCII previews and shadow-effect SVGs.
 
 ```bash
-# SVG — beautiful-mermaid, default tokyo-night theme
-mmd-render diagram.mmd
+# Install
+npm install -g box-of-rain
 
-# SVG — explicit output path + theme
-mmd-render --theme nord diagram.mmd output.svg
-open output.svg
+# ASCII (flowchart/sequence only)
+box-of-rain diagram.mmd
 
-# ASCII — box-of-rain (flowchart/sequence), falls back to beautiful-mermaid ASCII
-mmd-render --ascii diagram.mmd
-
-# Help
-mmd-render --help
+# SVG with shadows
+box-of-rain --svg diagram.mmd > diagram.svg
 ```
 
-**Available themes:** `tokyo-night` · `dracula` · `catppuccin` · `nord` · `github` · `github-dark` (+ 9 more)
+### beautiful-mermaid (ASCII + themed SVG library)
 
-**Source:** `~/.local/share/mmd-render/index.ts` · Dependencies: `beautiful-mermaid`, `box-of-rain`
-
-### Mermaid CLI (all types)
-
-Use when diagram type isn't supported by mmd-render (Gantt, pie, git, xychart, etc.).
+No CLI — requires bun. Better ASCII quality than box-of-rain for nested subgraphs and dotted edges. 15 built-in themes.
 
 ```bash
-# Install once
-bun add -g @mermaid-js/mermaid-cli
+# Install (requires bun)
+bun add beautiful-mermaid  # in a temp dir or project
 
-# Render
+# Render via bun -e
+bun -e "
+import { renderMermaidSVG, renderMermaidAscii, THEMES } from 'beautiful-mermaid';
+import { readFileSync, writeFileSync } from 'fs';
+
+const src = readFileSync('diagram.mmd', 'utf8');
+
+// Themed SVG
+const svg = renderMermaidSVG(src, { theme: THEMES.tokyoNight });
+writeFileSync('diagram.svg', svg);
+
+// ASCII
+console.log(renderMermaidAscii(src));
+"
+```
+
+**Themes:** `tokyoNight` · `dracula` · `catppuccin` · `nord` · `github` · `githubDark` (+ 9 more via `THEMES`)
+
+**Key exports:** `renderMermaidSVG`, `renderMermaidAscii`, `renderMermaidSync`, `parseMermaid`, `THEMES`, `fromShikiTheme`
+
+### Mermaid CLI (all diagram types)
+
+Fallback for types beautiful-mermaid and box-of-rain don't support (Gantt, pie, git, xychart).
+
+```bash
+npm install -g @mermaid-js/mermaid-cli
 mmdc -i diagram.mmd -o diagram.svg
 mmdc -i diagram.mmd -o diagram.png -t dark
-mmdc -i diagram.mmd -o diagram.svg -w 1200
 ```
+
+## Audit Workflow
+
+When cleaning up existing diagrams in a codebase:
+
+1. **Find all diagrams** — `grep -r '```mermaid' docs/` and `find . -name '*.mmd'`
+2. **Check for legacy syntax** — `graph` keyword, single-letter IDs, oversized flowcharts
+3. **Fix markup in place** — the fenced code blocks in `.md` files are the deliverable
+4. **Sync `.mmd` source files** with inline counterparts (if both exist)
+5. **Remove committed SVGs** if GitHub renders the mermaid natively
+6. **Do NOT generate SVGs** unless the user explicitly asks
+
+### Common Fixes
+
+| Problem | Fix |
+|---------|-----|
+| `graph LR` / `graph TB` | `flowchart LR` / `flowchart TB` |
+| `A[Label] --> B[Label]` | `Input[Label] --> Process[Label]` (descriptive IDs) |
+| 20+ nodes in one diagram | Split by concern, move error details to companion tables |
+| `style A fill:#ffd` after renaming A | Update style refs to match new node IDs |
+| Unquoted `<br/>` in flowchart labels | Quote: `Node["Line 1<br/>Line 2"]` |
+| Duplicate `.mmd` + inline block | Pick one source of truth, delete the other |
 
 ## Default Workflow
 
-1. **Write** the Mermaid markup based on what the user describes
-2. **Embed** a raw fenced code block in the response — works in GitHub, Obsidian, and most doc tools natively
-3. **Offer** rendering options:
-   - "Want me to render this as a themed SVG? (`mmd-render --theme nord diagram.mmd`)"
-   - For flowchart/sequence: "Or an ASCII preview? (`mmd-render --ascii diagram.mmd`)"
-4. **Save** `.mmd` to `docs/diagrams/` if working in a project codebase
+1. **Write** clean Mermaid markup with descriptive node IDs
+2. **Embed** in a fenced code block — GitHub and Obsidian render it natively
+3. **Save** `.mmd` to `docs/diagrams/` if the project uses standalone diagram files
+4. **Ask** if they want rendered output: "Want me to render this as ASCII or a themed SVG?"
+5. **If yes**, follow the tool selection in "Choosing the Right Output" — box-of-rain first, beautiful-mermaid if needed, mmdc as last resort
 
 ## Anti-Patterns
 
-- ❌ Using mmd-render SVG for Gantt/pie/git/xychart (not supported — use `mmdc`)
-- ❌ Using mmd-render ASCII for state/class/ER (not supported — use SVG mode)
-- ❌ Diagrams with 20+ nodes — split or summarize
-- ❌ Bare letters as node names (`A --> B`) without labels
-- ❌ Forgetting flowchart direction (`flowchart` without LR/TD/RL/BT)
-- ❌ Using `graph` keyword instead of `flowchart` (legacy syntax)
+- Defaulting to SVG rendering when the user just wants a diagram in their docs
+- Generating SVGs and committing them alongside `.mmd` source (redundant, drifts)
+- Diagrams with 20+ nodes — split or summarize
+- Bare letters as node names (`A --> B`) without descriptive labels
+- Forgetting flowchart direction (`flowchart` without LR/TD/RL/BT)
+- Using `graph` keyword instead of `flowchart` (legacy syntax)
+- Encoding every error branch in a flowchart when a table does it better
