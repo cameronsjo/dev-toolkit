@@ -10,8 +10,7 @@
     {
       "name": "dev-toolkit",
       "source": "./.claude-plugin",
-      "description": "Development workflow tools - logging agents, project checks, linting, and context loading",
-      "version": "1.2.0"
+      "description": "Development workflow tools - logging agents, project checks, linting, and context loading"
     }
   ]
 }
