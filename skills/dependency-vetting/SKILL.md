@@ -6,6 +6,10 @@ description: >
   network access, or any dependency from an unknown author. Runs a structured
   5-phase assessment: author identity, dependency tree, source audit, build
   pipeline, and risk scoring.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Dependency Vetting

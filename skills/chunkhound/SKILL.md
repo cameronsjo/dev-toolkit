@@ -1,6 +1,10 @@
 ---
 name: chunkhound
 description: Use when setting up ChunkHound for semantic code search on a large or unfamiliar codebase, enabling the chunkhound MCP server so Claude can answer "how does X work" questions across thousands of files, or when local-first AI-accessible indexing is needed.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # ChunkHound

@@ -1,6 +1,10 @@
 ---
 name: logging
 description: Generate structured log messages following the action-oriented pattern. Use when writing log statements, adding logging to code, or when user mentions "logging", "log messages", or asks to add logs. Pattern uses three phases - Preparing/Attempting (before action), Successfully (after success), Failed (after failure) - with structured parameters for searchability.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Structured Logging Pattern

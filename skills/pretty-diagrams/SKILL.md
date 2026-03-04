@@ -1,6 +1,10 @@
 ---
 name: pretty-diagrams
 description: Create, audit, and render Mermaid diagrams. Use when producing architecture diagrams, flowcharts, sequence, state, class, or ER diagrams. Also use when cleaning up existing diagrams — fixing legacy syntax, replacing single-letter node IDs, trimming oversized flowcharts, or deduplicating diagram sources.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Pretty Diagrams

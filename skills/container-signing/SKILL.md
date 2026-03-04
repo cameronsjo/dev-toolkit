@@ -1,6 +1,10 @@
 ---
 name: container-signing
 description: Set up Docker image signing with Cosign and SLSA provenance attestations. Use when configuring CI/CD for container builds, setting up GHCR publishing, or implementing supply chain security.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Container Image Signing

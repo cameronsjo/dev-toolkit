@@ -1,6 +1,10 @@
 ---
 name: gibram
 description: Use when researching or writing across a large doc corpus, finding related prior work, tracing concept relationships across notes/ADRs/specs, or indexing a specific directory of markdown files into a local knowledge graph. Also use when the user says "set up gibram for [directory]".
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # GibRAM

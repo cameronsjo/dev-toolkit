@@ -1,6 +1,10 @@
 ---
 name: skill-scout
 description: Evaluate a GitHub repo — what it does, how it works, what problem it solves, when to use it, and how to invoke it. Then offers to build a Claude skill from it. Drop in any GitHub URL or owner/repo slug. Works on both github.com and GitHub Enterprise instances.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Scout

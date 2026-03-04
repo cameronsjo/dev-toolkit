@@ -1,6 +1,10 @@
 ---
 name: levelup
 description: Audit and upgrade projects to 2026 tooling standards. Supports mise, Biome, uv+ruff migrations.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # /levelup - Modern Tooling Upgrades

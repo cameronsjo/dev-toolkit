@@ -1,6 +1,10 @@
 ---
 name: cloud-native-checklist
 description: Generate CNCF/12-Factor compliance checklists and ADRs for cloud-native applications. Use when reviewing application architecture, planning containerization, or documenting cloud-native decisions.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Cloud-Native Compliance Checklist

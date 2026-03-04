@@ -4,6 +4,10 @@ description: >
   Install the Claude Code GitHub App with DDoS/abuse safeguards. Runs the
   standard install, then hardens fork PR workflows, audits the workflow file
   for unsafe triggers, and reminds about API spend limits.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Install GitHub App Safely

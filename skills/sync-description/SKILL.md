@@ -3,6 +3,10 @@ name: sync-description
 description: >
   Update GitHub repo description from README analysis. Extracts purpose and
   differentiators, generates a concise description, and applies it via gh CLI.
+license: MIT
+metadata:
+  author: cameronsjo
+  version: "1.0"
 ---
 
 # Sync Description
