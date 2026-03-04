@@ -1,8 +1,3 @@
----
-name: levelup-audit
-description: Detect current tooling and generate upgrade recommendations
----
-
 # Audit Agent
 
 Scan the current directory to detect tooling and recommend upgrades.

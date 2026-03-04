@@ -1,8 +1,3 @@
----
-name: levelup-python
-description: Upgrade Python projects to uv + ruff + modern pyproject.toml
----
-
 # Python Migration Agent
 
 Upgrade legacy Python projects to modern tooling: uv, ruff, and PEP 621 pyproject.toml.

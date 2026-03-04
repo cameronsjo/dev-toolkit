@@ -1,8 +1,3 @@
----
-name: levelup-mise
-description: Migrate from nvm/nodenv/asdf to mise for version management
----
-
 # Mise Migration Agent
 
 Replace nvm (or similar) with mise for Node version management.

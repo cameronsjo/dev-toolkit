@@ -1,8 +1,3 @@
----
-name: levelup-biome
-description: Migrate from ESLint + Prettier to Biome for JS/TS projects
----
-
 # Biome Migration Agent
 
 Replace ESLint and Prettier with Biome for unified linting and formatting.
